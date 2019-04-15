@@ -7,3 +7,5 @@ Juego en Assembler que consiste en atrapar un “conejo” antes que escape del 
 * Bandara, N. (2017). _Answer to How to Print colored String in ARM Assembly_. Extraído de: https://stackoverflow.com/questions/46084673/how-to-print-colored-string-in-arm-assembly
 
 * Barnes, R. (2015). _Answer to List of ANSI Color Scape Sequences_. Extraído de: https://stackoverflow.com/questions/4842424/list-of-ansi-color-escape-sequences
+
+* Manzke, M. (2007). _2 - Dimensional Arrays_. Extraído de: https://www.scss.tcd.ie/Michael.Manzke/1ba3/1BA3_33_hll.pdf
