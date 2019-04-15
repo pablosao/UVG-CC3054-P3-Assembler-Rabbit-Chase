@@ -23,6 +23,7 @@ CLEAR:
 .align 2 
 .global BANNER 
 
+/* Banner de ingreso  */
 BANNER: 
 	
 	PUSH  {LR} 
@@ -43,7 +44,7 @@ BANNER:
 	BL    puts			@ Se muestra en pantalla 
 
 	POP   {PC} 
-
+	
 
 /*		Area de Datos		*/ 
 
@@ -75,7 +76,7 @@ instrucciones:
 	.ascii "" 
 	
 menu: 
-	.ascii "Ingrese el número de opción:\n 1). Iniciar Partida. \n2). Salir.\n" 
+	.ascii "\t\t\tMenú \n1). Iniciar Partida. \n2). Salir.\n" 
 	
 linea_nueva: 
 	.ascii "\n" 
