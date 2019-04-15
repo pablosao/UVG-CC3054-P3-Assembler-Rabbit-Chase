@@ -48,7 +48,7 @@ _play:
 
 	/* Armamos matriz inicial */
 
-	LDR   R0,=display		@ Cargamos dirección de despliegue
+/*	LDR   R0,=display		@ Cargamos dirección de despliegue
 	LDR   R1,=tablero		@ Dirección de matriz
 
 	ADD   R4, #4			@ indice de matriz
@@ -57,7 +57,9 @@ _play:
 
 	SUBS  R5, #1			@ restamos contador de ciclo
 	CMP   R5, #0			@ Si R5 no == 1
-	BNE   _play			@    retornamos a _play
+	BNE   _play			@    retornamos a _play */
+	
+	BL   PRINT_M5X5
 
 	B     _exit			@ de lo contrario salimos
 
@@ -72,12 +74,31 @@ _exit:
 mensaje_ingreso:
 	.asciz "Ingrese Opción: "
 
+/* Formato de impresion de tablero */
+.global display
 display:
 	.asciz "%s | "
 
-tablero:
-	.asciz "(1)","(2)"
-	.asciz "(3)","(4)"
+/* Se arma tablero */
+.global tablero_f1
+tablero_f1:
+	.asciz "(1)","(2)","(3)","(4)","(5)"
+
+.global tablero_f2
+tablero_f2:
+	.asciz "(6)","(7)","(8)","(9)","(10)"
+
+.global tablero_f3
+tablero_f3:
+	.asciz "(11)","(12)","(13)","(14)","(15)"
+
+.global tablero_f4
+tablero_f4:
+	.asciz "(16)","(17)","(18)","(19)","(20)"
+
+.global tablero_f5
+tablero_f5:
+	.asciz "(21)","(22)","(23)","(24)","(25)"
 
 vingreso:
 	.asciz ""
