@@ -1,48 +1,24 @@
-/************************************************************************************/
-/*   Autor: Pablo Sao */
-/*   Autor: Mirka Monzon  */
-/*   Fecha: 11 de abril de 2019 */
-/*   Descripcion: */
-/************************************************************************************/
 
-.text
-.align 2
-.global main
+/************************************************************************************/ 
+/*         Autor: Pablo Sao & Mirka Monzon                                          */ 
+/*         Fecha: 11 de abril de 2019                                               */ 
+/*   Descripcion: Rabbit Chase, donde el objetivo es capturar el conejo en un       */ 
+/*				  tablero.                                          */
+/************************************************************************************/ 
 
+.text 
+.align 2 
+.global main 
+.type main, %function 
 
-main:
-	STMFD SP!, {LR}
+main: 
+	STMFD SP!, {LR} 
 
-	/* limpieza de datos */
-	LDR   R0, =clear
-	BL    puts
+	BL    CLEAR 
+	BL    BANNER 
 	
-	/* Imprimiendo arte */
-	LDR   R0, =arte
-	BL    puts
-	
-	B     _exit
+	B     _exit 
 
-_exit:
-	LDMFD SP!,{LR}
-	BX    LR
-
-.data
-.align 2
-
-arte:
-	.asciz "\033[32m
- ______          _      _      _             _______  _                         
-(_____ \\        | |    | |    (_)   _       (_______)| |                        
- _____) ) _____ | |__  | |__   _  _| |_      _       | |__   _____   ___  _____ 
-|  __  / (____ ||  _ \\ |  _ \\ | |(_   _)    | |      |  _ \\ (____ | /___)| ___ |
-| |  \\ \\ / ___ || |_) )| |_) )| |  | |_     | |_____ | | | |/ ___ ||___ || ____|
-|_|   |_|\\_____||____/ |____/ |_|   \\__)     \\______)|_| |_|\\_____|(___/ |_____)
-\033[0m
-\033[36m----------------------------------------------------------------------------------\033[0m
-\033[33m      ()_()\033[0m                                                      \033[33m()_()\033[0m
-\033[33m      (o o)\033[0m             by Pablo Sao & Mirka Monzon              \033[33m(o o)\033[0m
-\033[33m  ooO--(_)--Ooo\033[0m                     2019                     \033[33mooO--(_)--Ooo\022[0m\n"
-
-clear:
-	.asciz "\033[H\033[J"
+_exit: 
+	LDMFD SP!,{LR} 
+	BX    LR 
