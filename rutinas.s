@@ -57,8 +57,70 @@ MENU:
 	POP   {PC}
 
 
-/*		Area de Datos		*/ 
+.text
+.align 2
+.global PRINT5X5
 
+/*  Despliegue del menu  */
+PRINT5X5:
+	PUSH  {LR}		@ Se guarda dirección de llamado
+
+	MOV   R5, #6		@ Control de loop
+	LDR   R1, =fila1	@ Se carga dirección de vector 1
+	BL    _printM		@ Se llama al método de impresión
+
+	LDR   R0,=new_line	@ Carga dirección de salto de linea
+	BL    puts		@ Se imprime en pantalla
+
+	MOV   R5, #6		@ Control de loop
+	LDR   R1, =fila2	@ Se carga dirección de vector 1
+	BL    _printM		@ Se llama al método de impresión
+	
+	LDR   R0,=new_line	@ Carga dirección de salto de linea
+	BL    puts		@ Se imprime en pantalla
+
+	MOV   R5, #6		@ Control de loop
+	LDR   R1, =fila3	@ Se carga dirección de vector 1
+	BL    _printM		@ Se llama al método de impresión
+
+	LDR   R0,=new_line	@ Carga dirección de salto de linea
+	BL    puts		@ Se imprime en pantalla
+
+	MOV   R5, #6		@ Control de loop
+	LDR   R1, =fila4	@ Se carga dirección de vector 1
+	BL    _printM		@ Se llama al método de impresión
+
+	LDR   R0,=new_line	@ Carga dirección de salto de linea
+	BL    puts		@ Se imprime en pantalla
+
+	MOV   R5, #6		@ Control de loop
+	LDR   R1, =fila5	@ Se carga dirección de vector 1
+	BL    _printM		@ Se llama al método de impresión
+	
+	LDR   R0,=new_line	@ Carga dirección de salto de linea
+	BL    puts		@ Se imprime en pantalla
+	
+	POP   {PC}		@ Se retorna a la rutina de procedencia
+
+_printM:
+
+	MOV   R7, #4
+	MOV   R0, #1
+	MOV   R2, #4	
+	SWI   0
+
+	ADD   R1, #4
+
+	SUBS  R5, #1
+	CMP   R5, #0
+	BNE   _printM
+	MOV  PC, LR
+
+
+
+/****************************************/
+/*		Area de Datos		*/ 
+/****************************************/
 .data 
 .align 2 
 
@@ -89,4 +151,5 @@ instrucciones:
 menu: 
 	.ascii "\t\t\tMenú \n\t1). Iniciar Partida. \n\t2). Salir.\n" 
 
-
+new_line:
+	.ascii "\n"

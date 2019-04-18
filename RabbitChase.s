@@ -13,9 +13,9 @@
 main: 
 	STMFD SP!, {LR} 
 
-	BL    CLEAR 
-	BL    BANNER 
-	BL    MENU 
+	BL    CLEAR 		@ Limpiamos Pantalla
+	BL    BANNER 		@ Mostramos Banner
+	BL    MENU 		@ Mostramos Menú
 
 	/*   Ingreso de opción   */
 
@@ -53,36 +53,13 @@ _error:
 
 
 _play:
-	MOV   R5, #6		@ Control de loop
-	MOV   R6, #0
-	BL    _print
-
-	LDR   R0,=temp
-	BL    puts
+	
+	BL    CLEAR 		@ Limpiamos Pantalla
+	BL    BANNER 		@ Mostramos Banner
+	BL    PRINT5X5		@ Mostramos matriz de inicio
 
 	B     _exit
 
-_print:
-	/*LDR   R0, =display
-	LDR   R1, =fila1
-
-	ADD   R1, R6
-
-	BL    printf */
-
-	MOV   R7, #4
-	MOV   R0, #1
-	MOV   R2, #4
-	LDR   R1, =fila1
-	ADD   R1, R6
-	SWI   0
-
-	ADD   R6, #4
-
-	SUBS  R5, #1
-	CMP   R5, #0
-	BNE   _print
-	MOV  PC, LR
 
 _exit: 
 	LDMFD SP!,{LR} 
@@ -100,14 +77,22 @@ opcionIn:
 msjOpcion:
 	.asciz "Ingrese Opción: "
 
+.global fila1
 fila1:
-	.asciz "(1) ","(2) ","(3) ","(4) ","(5) ","\n   "
+	.asciz "( ) ","( ) ","( ) ","( ) ","( ) ","\n   "
 
+.global fila2
 fila2:
-	.asciz "(6)","(7)","(8)","(9)","(10)","\n"
+	.asciz "( ) ","( ) ","( ) ","( ) ","( ) ","\n   "
 
-display:
-	.asciz "%s "
+.global fila3
+fila3:
+	.asciz "( ) ","( ) ","( ) ","( ) ","( ) ","\n   "
 
-temp:
-	.ascii "\n"
+.global fila4
+fila4:
+	.asciz "( ) ","( ) ","( ) ","( ) ","( ) ","\n   "
+
+.global fila5
+fila5:
+	.asciz "( ) ","( ) ","( ) ","( ) ","( ) ","\n   "
