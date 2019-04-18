@@ -1,104 +1,113 @@
+/************************************************************************************/ 
+/*         Autor: Pablo Sao & Mirka Monzon                                          */ 
+/*         Fecha: 11 de abril de 2019                                               */ 
+/*   Descripcion: Rabbit Chase, donde el objetivo es capturar el conejo en un       */ 
+/*				  tablero.                                          */ 
+/************************************************************************************/ 
 
-/************************************************************************************/
-/*         Autor: Pablo Sao & Mirka Monzon                                          */
-/*         Fecha: 11 de abril de 2019                                               */
-/*   Descripcion: Rabbit Chase, donde el objetivo es capturar el conejo en un       */
-/*				  tablero.                                          */
-/************************************************************************************/
+.text 
+.align 2 
+.global main 
+.type main, %function 
 
-.text
-.align 2
-.global main
-.type main, %function
+main: 
+	STMFD SP!, {LR} 
 
-main:
-	STMFD SP!, {LR}
+	BL    CLEAR 
+	BL    BANNER 
+	BL    MENU 
 
-	BL    CLEAR
-	BL    BANNER
+	/*   Ingreso de opción   */
 
-	LDR   R0, =mensaje_ingreso	@ cargando direccion de mensaje
-	BL    puts 			@ mostrando mensaje en pantalla
+	LDR   R0, =msjOpcion
+	BL    puts
+
+	/*   Ingreso de teclado   */
+
+	LDR   R0, =fIngreso
+	LDR   R1, =opcionIn
+	BL    scanf
+
+	/*   verificamos que se haya ingresado un número   */
+	CMP   R0, #0
+	BEQ   _error
+
+	/*   Identificación de operaciones   */
+	LDR   R0, =opcionIn
+	LDR   R0, [R0]
+
+	CMP   R0, #1
+	BLEQ  _play
+
+	CMP   R0, #2
+	BLEQ   _exit
+	BLGT  _error
 
 
+_error:
+	LDR   R0, =opcionIn
+	MOV   R1, #0
+	STR   R1,[R0]
+	BL    getchar
+	B     main
 
-ingreso:
-
-	/* Lectura de teclado */
-	MOV   R7, #3			@ syscall para ingreso de datos
-	MOV   R0, #0			@ lectura de pantalla
-	MOV   R2, #1			@ lee solo 1 caracter
-	LDR   R1, =vingreso             @ variable donde se almacena el contenido
-	SWI   0
-
-	LDR   R1, [R1]			@ Cargamos valor ingresado
-
-	MOV   R4, #-4			@ Seteamos dirección inicial de matriz
-	MOV   R5, #4			@ seteamos contador de impresión
-
-	CMP   R1, #0x31			@ Si R1 == 1
-	BLEQ   _play			@   Inicia juego
-
-	CMP   R1, #0x32			@ Si R2 == 2
-	BLEQ   _exit			@   Sale del juego
-
-	BL    main
 
 _play:
+	MOV   R5, #6		@ Control de loop
+	MOV   R6, #0
+	BL    _print
 
-	/* Armamos matriz inicial */
+	LDR   R0,=temp
+	BL    puts
 
-/*	LDR   R0,=display		@ Cargamos dirección de despliegue
-	LDR   R1,=tablero		@ Dirección de matriz
+	B     _exit
 
-	ADD   R4, #4			@ indice de matriz
-	ADD   R1, R4			@ nos posicionamos en el valor del indice
-	BL    printf			@ se imprime el valor
+_print:
+	/*LDR   R0, =display
+	LDR   R1, =fila1
 
-	SUBS  R5, #1			@ restamos contador de ciclo
-	CMP   R5, #0			@ Si R5 no == 1
-	BNE   _play			@    retornamos a _play */
-	
-	BL   PRINT_M5X5
+	ADD   R1, R6
 
-	B     _exit			@ de lo contrario salimos
+	BL    printf */
 
-_exit:
-	LDMFD SP!,{LR}
+	MOV   R7, #4
+	MOV   R0, #1
+	MOV   R2, #4
+	LDR   R1, =fila1
+	ADD   R1, R6
+	SWI   0
 
+	ADD   R6, #4
+
+	SUBS  R5, #1
+	CMP   R5, #0
+	BNE   _print
+	MOV  PC, LR
+
+_exit: 
+	LDMFD SP!,{LR} 
 	BX    LR
 
 .data
 .align 2
 
-mensaje_ingreso:
+fIngreso:
+	.asciz "%d"
+
+opcionIn:
+	.word 0
+
+msjOpcion:
 	.asciz "Ingrese Opción: "
 
-/* Formato de impresion de tablero */
-.global display
-display:
-	.asciz "%s | "
+fila1:
+	.asciz "(1) ","(2) ","(3) ","(4) ","(5) ","\n   "
 
-/* Se arma tablero */
-.global tablero_f1
-tablero_f1:
-	.asciz "(1)","(2)","(3)","(4)","(5)","\n"
-
-.global tablero_f2
-tablero_f2:
+fila2:
 	.asciz "(6)","(7)","(8)","(9)","(10)","\n"
 
-.global tablero_f3
-tablero_f3:
-	.asciz "(11)","(12)","(13)","(14)","(15)","\n"
+display:
+	.asciz "%s "
 
-.global tablero_f4
-tablero_f4:
-	.asciz "(16)","(17)","(18)","(19)","(20)","\n"
-
-.global tablero_f5
-tablero_f5:
-	.asciz "(21)","(22)","(23)","(24)","(25)","\n"
-
-vingreso:
-	.asciz ""
+temp:
+	.ascii "\n"
