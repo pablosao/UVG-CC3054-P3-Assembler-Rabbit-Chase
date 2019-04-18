@@ -82,23 +82,23 @@ display:
 /* Se arma tablero */
 .global tablero_f1
 tablero_f1:
-	.asciz "(1)","(2)","(3)","(4)","(5)"
+	.asciz "(1)","(2)","(3)","(4)","(5)","\n"
 
 .global tablero_f2
 tablero_f2:
-	.asciz "(6)","(7)","(8)","(9)","(10)"
+	.asciz "(6)","(7)","(8)","(9)","(10)","\n"
 
 .global tablero_f3
 tablero_f3:
-	.asciz "(11)","(12)","(13)","(14)","(15)"
+	.asciz "(11)","(12)","(13)","(14)","(15)","\n"
 
 .global tablero_f4
 tablero_f4:
-	.asciz "(16)","(17)","(18)","(19)","(20)"
+	.asciz "(16)","(17)","(18)","(19)","(20)","\n"
 
 .global tablero_f5
 tablero_f5:
-	.asciz "(21)","(22)","(23)","(24)","(25)"
+	.asciz "(21)","(22)","(23)","(24)","(25)","\n"
 
 vingreso:
 	.asciz ""

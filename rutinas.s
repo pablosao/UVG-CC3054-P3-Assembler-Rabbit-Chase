@@ -29,14 +29,14 @@ PRINT_M5X5:
 
 	LDR   R1, =tablero_f1
 	MOV   R4,#-4
-	MOV   R5, #5		@ control loop
+	MOV   R5, #6		@ control loop
 
 	BL    _printM
 
 	/* nueva linea */
 	@LDR   R0, =display
-	MOV   R0, #0x0A		@ ASCII de nueva linea
-	BL    puts
+	@MOV   R0, #0x0A		@ ASCII de nueva linea
+	@BL    puts
 
 
 	LDR   R1, =tablero_f2
