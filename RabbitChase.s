@@ -77,22 +77,3 @@ opcionIn:
 msjOpcion:
 	.asciz "Ingrese Opción: "
 
-.global fila1
-fila1:
-	.asciz "( ) ","( ) ","( ) ","( ) ","( ) ","\n   "
-
-.global fila2
-fila2:
-	.asciz "( ) ","( ) ","( ) ","( ) ","( ) ","\n   "
-
-.global fila3
-fila3:
-	.asciz "( ) ","( ) ","( ) ","( ) ","( ) ","\n   "
-
-.global fila4
-fila4:
-	.asciz "( ) ","( ) ","( ) ","( ) ","( ) ","\n   "
-
-.global fila5
-fila5:
-	.asciz "( ) ","( ) ","( ) ","( ) ","( ) ","\n   "
