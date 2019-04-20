@@ -17,6 +17,11 @@ SETUSR:
 	BL    BANNER 		@ Mostramos Banner
 	BL    PRINT5X5		@ Mostramos matriz de inicio
 
+	BL     _confInicio
+
+
+
+_confInicio:
 	MOV   R7, #3
 	MOV   R0, #0
 	MOV   R2, #1
@@ -26,21 +31,25 @@ SETUSR:
 	LDR   R0, =move
 	LDR   R0, [R0]
 
-	/* Identificando movimiento */
+	PUSH  {R0}
+	
+	@**     Identificando movimiento
 	CMP   R0, #'a'
-	BLEQ  _subFila
-
-	/*LDR   R0, =Entro
-	BL    puts*/
+	BLEQ  _subFila		@ jugador a la izquierda
 
 	BL    CLEAR 		@ Limpiamos Pantalla
 	BL    BANNER 		@ Mostramos Banner
 	BL    PRINT5X5		@ Mostramos matriz de inicio
 
+	POP   {R0}
+
+	CMP   R0, #'c'
+	BNE   _confInicio
 	POP   {PC}
 
 
 
+/*  Movimiento a la izquierda   */
 _subFila:
 	PUSH  {LR}
 
@@ -93,6 +102,8 @@ _subFila:
 .global IDFILA
 
 /* Carga en R12 la fila correspondiente */
+@**     R11 -> Numero de fila a cargar, esta esta en variable
+@**     R12 -> Retorna dirección de la fila en variable
 IDFILA:
 	PUSH  {LR}
 
