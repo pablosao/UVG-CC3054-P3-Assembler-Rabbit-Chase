@@ -37,4 +37,4 @@ $ ./RabbitChase
 
 * Manzke, M. (2007). _2 - Dimensional Arrays_. Extraído de: https://www.scss.tcd.ie/Michael.Manzke/1ba3/1BA3_33_hll.pdf
 
-* Smith, B. (2014). _Raspberry Pi Assembly Language. Segunda edición. California, Estados Unidos: CreateSpace. 53, 72-73, 88 - 94 pp.
+* Smith, B. (2014). _Raspberry Pi Assembly Language_. Segunda edición. California, Estados Unidos: CreateSpace. 53, 72-73, 88 - 94 pp.
