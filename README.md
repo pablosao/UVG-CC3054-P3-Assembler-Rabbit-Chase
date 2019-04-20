@@ -1,10 +1,6 @@
 # Proyecto 3: Rabbit Chase
 
-El objetivo del juego es atrapar un “conejo” antes que escape del tablero de 5x5.  El jugador (H) selecciona como punto de partida cualquier posición de inicio de las 
-filas o columnas externas. El conejo (B) aparece en el centro del tablero.  Para su siguiente movimiento, el jugador puede elegir únicamente casillas vecinas a su última 
-posición.  En su siguiente movimiento, el conejo elige de forma aleatoria cualquiera de los 9 cuadros vecinos y decide una dirección. En el tercer movimiento, el conejo 
-solamente podrá elegir una de las 3 casillas vecinas en la dirección elegida.  El jugador gana si elige la misma casilla elegida por el conejo en el siguiente movimiento 
-(X). Se acaba el juego si el conejo sale del tablero (B!) alcanzando cualquiera de las posiciones en las filas o columnas externas.  
+El objetivo del juego es atrapar un “conejo” antes que escape del tablero de 5x5.  El jugador (H) selecciona como punto de partida cualquier posición de inicio de las filas o columnas externas. El conejo (B) aparece en el centro del tablero.  Para su siguiente movimiento, el jugador puede elegir únicamente casillas vecinas a su última posición.  En su siguiente movimiento, el conejo elige de forma aleatoria cualquiera de los 9 cuadros vecinos y decide una dirección. En el tercer movimiento, el conejo solamente podrá elegir una de las 3 casillas vecinas en la dirección elegida.  El jugador gana si elige la misma casilla elegida por el conejo en el siguiente movimiento (X). Se acaba el juego si el conejo sale del tablero (B!) alcanzando cualquiera de las posiciones en las filas o columnas externas.  
 
 # Requisitos
 
@@ -12,8 +8,7 @@ solamente podrá elegir una de las 3 casillas vecinas en la dirección elegida. 
 
 # Como ejecutar el probrama
 
-Para ejecutar el juego debemos colocar los archivos de assembler (.s) en un mismo directorio, y posicionarnos desde la terminal en dicha locación y poder compilar el código
-con el siguiente comando:
+Para ejecutar el juego debemos colocar los archivos de assembler (.s) en un mismo directorio, y posicionarnos desde la terminal en dicha locación y poder compilar el código con el siguiente comando:
 
 ```bash
 $ gcc -o RabbitChase var.s rutinas.s RabbitChase.s  
