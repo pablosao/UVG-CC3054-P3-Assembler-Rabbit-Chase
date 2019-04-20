@@ -61,58 +61,32 @@ _initMatrix:
 	LDR   R0, =colUsr
 	LDR   R0, [R0]
 	
-	LDR   R1, =filaUsr
-	LDR   R1,[R1]
-
-	CMP   R1, #1
-	LDREQ R2, =fila1
-	
-	CMP   R1, #2
-	LDREQ R2, =fila2
-
-	CMP   R1, #3
-	LDREQ R2, =fila3
-	
-	CMP   R1, #4
-	LDREQ R2, =fila4
-
-	CMP   R1, #5
-	LDREQ R2, =fila5
+	LDR   R11, =filaUsr
+	LDR   R11,[R11]
 
 	LDR   R1, =displayUsr
 	LDR   R1, [R1]
 
-	ADD   R2, R0
-	STR   R1, [R2]
+	BL    IDFILA
+
+	ADD   R12, R0
+	STR   R1, [R12]
 
 
 	@**     Posición inicial de conejo
 	LDR   R0, =colConejo
 	LDR   R0, [R0]
 	
-	LDR   R1, =filaConejo
-	LDR   R1,[R1]
-
-	CMP   R1, #1
-	LDREQ R2, =fila1
-	
-	CMP   R1, #2
-	LDREQ R2, =fila2
-
-	CMP   R1, #3
-	LDREQ R2, =fila3
-	
-	CMP   R1, #4
-	LDREQ R2, =fila4
-
-	CMP   R1, #5
-	LDREQ R2, =fila5
+	LDR   R11, =filaConejo
+	LDR   R11,[R11]
 
 	LDR   R1, =displayConejo
 	LDR   R1, [R1]
 
-	ADD   R2, R0
-	STR   R1, [R2]
+	BL    IDFILA
+
+	ADD   R12, R0
+	STR   R1, [R12]
 
 	POP   {PC}	
 

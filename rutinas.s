@@ -91,6 +91,33 @@ _subFila:
 
 	POP   {PC}
 
+
+.text 
+.align 2 
+.global IDFILA
+
+/* Carga en R12 la fila correspondiente */ 
+IDFILA:
+	PUSH  {LR}
+
+	CMP   R11, #1
+	LDREQ R12, =fila1
+	
+	CMP   R11, #2
+	LDREQ R12, =fila2
+
+	CMP   R11, #3
+	LDREQ R12, =fila3
+	
+	CMP   R11, #4
+	LDREQ R12, =fila4
+
+	CMP   R11, #5
+	LDREQ R12, =fila5
+
+
+	POP   {PC}
+
 .text 
 .align 2 
 .global CLEAR 
