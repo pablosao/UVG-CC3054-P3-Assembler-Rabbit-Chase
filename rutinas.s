@@ -20,7 +20,7 @@ SETUSR:
 	BL     _confInicio
 
 
-
+/*   configura posición inicial de jugador   */
 _confInicio:
 	MOV   R7, #3
 	MOV   R0, #0
@@ -36,6 +36,9 @@ _confInicio:
 	@**     Identificando movimiento
 	CMP   R0, #'a'
 	BLEQ  _subFila		@ jugador a la izquierda
+
+	CMP   R0, #'d'
+	BLEQ  _addFila		@ jugador a la izquierda
 
 	BL    CLEAR 		@ Limpiamos Pantalla
 	BL    BANNER 		@ Mostramos Banner
@@ -96,6 +99,52 @@ _subFila:
 
 	POP   {PC}
 
+
+/*  Movimiento a la izquierda   */
+_addFila:
+	PUSH  {LR}
+
+	LDR   R4, =colUsr	@ direccion de posicion en columna
+	LDR   R2, [R4]		@ posición actual de la columna
+
+	PUSH  {R2}		@ Backup de posición actual de columna
+
+	ADD R2, #4
+
+	CMP   R2, #16		@ posición == 0
+	MOVGT R2, #0		@    posicion es columna 0
+
+	@**     actualizando variable de columna con nueva posición
+	STR   R2, [R4]
+
+
+	@**     Nueva posición de jugador	
+	LDR   R11, =filaUsr
+	LDR   R11,[R11]
+
+	LDR   R1, =displayUsr
+	LDR   R1, [R1]
+
+	BL    IDFILA
+
+	ADD   R12, R2
+	STR   R1, [R12]
+
+	POP   {R2}
+
+	@**     liberando posición anterior de jugador	
+	LDR   R11, =filaUsr
+	LDR   R11,[R11]
+
+	LDR   R1, =clsDisplay
+	LDR   R1, [R1]
+
+	BL    IDFILA
+
+	ADD   R12, R2
+	STR   R1, [R12]
+
+	POP   {PC}
 
 .text
 .align 2
