@@ -6,24 +6,25 @@
 /*				                                                    */ 
 /************************************************************************************/ 
 
+
 /*     Despliegue de jugadores    */
 .text
 .align 2
 .global displayUsr
 displayUsr:
-	.asciz "(H) "
+	.ascii "(H) "
 
 .text
 .align 2
 .global displayConejo
 displayConejo:
-	.asciz "(H) "
+	.asciz "(B) "
 
 .text
 .align 2
 .global clsDisplay
 clsDisplay:
-	.asciz "( ) "
+	.ascii "( ) "
 
 .text
 .align 2
@@ -33,61 +34,61 @@ displayCapConejo:		@ Captura de Conejo
 
 
 /*     Posición jugador    */
-.text
 .align 2
 .global colUsr
+.data
 colUsr:
-	.word 12
+	.word 8
 
-.text
 .align 2
 .global filaUsr
+.data
 filaUsr:
 	.word 1
 
 
 
 /*     Posición conejo    */
-.text
 .align 2
 .global colConejo
+.data
 colConejo:
-	.word 12
+	.word 8
 
-.text
 .align 2
 .global filaConejo
+.data
 filaConejo:
 	.word 3
 
 
 /*   Tablero de 5x5     */
-.text
 .align 2
 .global fila1
+.data
 fila1:
-	.asciz "( ) ","( ) ","(H) ","( ) ","( ) ","\n   "
+	.ascii "( ) ","( ) ","( ) ","( ) ","( ) "
 
-.text
 .align 2
 .global fila2
+.data
 fila2:
-	.asciz "( ) ","( ) ","( ) ","( ) ","( ) ","\n   "
+	.ascii "( ) ","( ) ","( ) ","( ) ","( ) "
 
-.text
 .align 2
 .global fila3
+.data
 fila3:
-	.asciz "( ) ","( ) ","(B) ","( ) ","( ) ","\n   "
+	.ascii "( ) ","( ) ","( ) ","( ) ","( ) "
 
-.text
 .align 2
 .global fila4
+.data
 fila4:
-	.asciz "( ) ","( ) ","( ) ","( ) ","( ) ","\n   "
+	.ascii "( ) ","( ) ","( ) ","( ) ","( ) "
 
-.text
 .align 2
 .global fila5
+.data
 fila5:
-	.asciz "( ) ","( ) ","( ) ","( ) ","( ) ","\n   "
+	.ascii "( ) ","( ) ","( ) ","( ) ","( ) "
