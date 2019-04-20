@@ -17,11 +17,6 @@ main:
 	@**    Inicializando matriz
 	BL    _initMatrix
 	
-	@**    Iniciando juego
-	BL    _startGame
-		
-
-_startGame:
 	@**    Desplegando inicio
 	BL    CLEAR 		@ Limpiamos Pantalla
 	BL    BANNER 		@ Mostramos Banner
@@ -95,7 +90,7 @@ _error:
 	MOV   R1, #0
 	STR   R1,[R0]
 	BL    getchar
-	B     _startGame
+	B     main
 
 
 _startPlay:
