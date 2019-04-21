@@ -22,40 +22,41 @@ SETUSR:
 
 /*   configura posición inicial de jugador   */
 _confInicio:
+	
+	BL    CLEAR 		@ Limpiamos Pantalla
+	BL    BANNER 		@ Mostramos Banner
+	BL    PRINT5X5		@ Mostramos matriz de inicio
+
 	MOV   R7, #3
 	MOV   R0, #0
 	MOV   R2, #1
 	LDR   R1, =move
 	SWI   0
 
-	LDR   R0, =move
-	LDR   R0, [R0]
+	LDR   R1, =move
+	LDRB  R1, [R1]
 
-	PUSH  {R0}
+	PUSH  {R1}
 	
 	@**     Identificando movimiento
 	@**     se le agrega NE a CMP para no permitir
 	@**     movimientos en diagonal
 
-	CMP   R0, #'a'
+	CMP   R1, #'a'
 	BLEQ  _subFila		@ jugador a la izquierda
 
-	CMP R0, #'d'
+	CMP R1, #'d'
 	BLEQ  _addFila		@ jugador a la izquierda
 
-	CMP R0, #'w'
+	CMP R1, #'w'
 	BLEQ  _subColumna	@ jugador hacia arriba
-
-	CMP R0, #'s'
+	
+	CMP R1, #'s'
 	BLEQ  _addColumna
 
-	BL    CLEAR 		@ Limpiamos Pantalla
-	BL    BANNER 		@ Mostramos Banner
-	BL    PRINT5X5		@ Mostramos matriz de inicio
+	POP   {R1}
 
-	POP   {R0}
-
-	CMP   R0, #'c'
+	CMP   R1, #'c'
 	BNE   _confInicio
 
 	POP   {PC}
