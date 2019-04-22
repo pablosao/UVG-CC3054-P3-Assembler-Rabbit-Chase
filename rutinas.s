@@ -62,12 +62,12 @@ _confInicio:
 	CMP R1, #'d'
 	BLEQ  _addFila		@ jugador a la izquierda
 
-	CMP R1, #'w'
+/*	CMP R1, #'w'
 	BLEQ  _subColumna	@ jugador hacia arriba
 
 	CMP R1, #'s'
 	BLEQ  _addColumna
-
+*/
 	POP   {R1}
 
 	CMP   R1, #'c'
@@ -95,20 +95,25 @@ MOVECONEJO:
 
 	CMP   R1, #1
 	BLEQ  _subFila		@ jugador a la izquierda
-
-	CMP R1, #2
+	MOVEQ R1, #0		@ limpiando variable
+	
+	CMP   R1, #2
 	BLEQ  _addFila		@ jugador a la izquierda
+	MOVEQ R1, #0
 
-	CMP R1, #3
+	CMP   R1, #3
 	BLEQ  _subColumna	@ jugador hacia arriba
+	MOVEQ R1, #0
 
-	CMP R1, #4
+	CMP   R1, #4
 	BLEQ  _addColumna
+	MOVEQ R1, #0
 
-	MOV   R1, #0		@ limpiando variable
+	MOV   R1, #0
 	MOV   R4, #0
 	MOV   R8, #0
 	MOV   R9, #0
+	MOV   R12, #0
 
 	POP   {PC}
 
@@ -164,6 +169,7 @@ MOVEUSR:
 _subFila:
 	PUSH  {LR}
 
+	MOV   R2, #0
 	LDR   R2, [R4]		@ posición actual de la columna
 
 	PUSH  {R2}		@ Backup de posición actual de columna
@@ -209,6 +215,7 @@ _subFila:
 _addFila:
 	PUSH  {LR}
 
+	MOV   R2, #0
 	LDR   R2, [R4]		@ posición actual de la columna
 
 	PUSH  {R2}		@ Backup de posición actual de columna
@@ -252,6 +259,7 @@ _addFila:
 _subColumna:
 	PUSH  {LR}
 
+	MOV   R1, #0
 	LDR   R1, [R4]		@ posición de columna
 
 	LDR   R11, [R9]	@ posición de fila
@@ -284,6 +292,7 @@ _subColumna:
 _addColumna:
 	PUSH  {LR}
 
+	MOV   R1, #0
 	LDR   R1, [R4]		@ posición de columna
 
 	LDR   R11, [R9]	@ posición de fila

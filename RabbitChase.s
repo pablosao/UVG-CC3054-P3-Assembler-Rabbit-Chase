@@ -173,9 +173,62 @@ _win:
 
 	LDR   R0, =win1
 	BL    puts
-	
-	B     _exit
 
+	MOV   R7, #4
+	MOV   R0, #1
+	MOV   R2, #47
+	LDR   R1, =continuar	
+	SWI   0
+
+	LDR   R0, =fIngreso
+	LDR   R1, =opcionIn
+	BL    scanf
+
+	@**   Limpieza de matriz
+	BL    _clear5x5
+
+	B     main     
+
+
+_clear5x5:
+	PUSH  {LR}
+	@** Limpieza Usuario
+	LDR   R4, =colUsr
+	LDR   R4, [R4]
+
+	@** Fila usuario
+	LDR   R11, =filaUsr
+	LDR   R11, [R11]
+
+	BL    IDFILA
+
+	ADD   R12, R4
+
+	LDR   R11, =clsDisplay
+	LDR   R11, [R11]
+
+	STR   R11,[R12]	
+
+
+	@** Limpieza Conejo
+	LDR   R4, =colConejo
+	LDR   R4, [R4]
+
+	@** Fila usuario
+	LDR   R11, =filaConejo
+	LDR   R11, [R11]
+
+	BL    IDFILA
+
+	ADD   R12, R4
+
+	LDR   R11, =clsDisplay
+	LDR   R11, [R11]
+
+	STR   R11,[R12]	
+
+
+	POP   {PC}
 
 _exit:
 	LDMFD SP!,{LR}
@@ -185,11 +238,14 @@ _exit:
 
 .data
 .align 2
-
-.align 2
 fIngreso:
 	.asciz "%d"
 
+.align 2
+inCHR:
+	.asciz "%c"
+
+.align 2
 opcionIn:
 	.word 0
 
