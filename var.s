@@ -27,7 +27,7 @@ clsDisplay:
 
 .text
 .align 2
-.global displayConejo
+.global displayCapConejo
 displayCapConejo:		@ Captura de Conejo
 	.ascii "(x) "
 

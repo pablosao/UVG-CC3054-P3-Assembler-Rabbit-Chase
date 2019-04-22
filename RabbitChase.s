@@ -168,12 +168,34 @@ _validaXY:
 
 _win:
 	
-	BL    CLEAR 		@ Limpiamos Pantalla
-	BL    BANNER 		@ Mostramos Banner
+	@**   Carga posición intersección
+	LDR   R4, =colUsr
+	LDR   R4, [R4]
 
+	LDR   R11, =filaUsr
+	LDR   R11, [R11]
+
+	BL    IDFILA
+
+	ADD   R12, R4
+
+	LDR   R11, =displayCapConejo
+	LDR   R11, [R11]
+
+	STR   R11,[R12]	
+
+	@**   Limpiamos y mostramos banner
+	BL    CLEAR 		@ Limpiamos Pantalla
+	@BL    BANNER 		@ Mostramos Banner
+	
+	@**   Mostramos mensaje de gano
 	LDR   R0, =win1
 	BL    puts
 
+	@** Mostramos tablero
+	BL    PRINT5X5
+
+	@**   Mostramos ingreso para esperar
 	MOV   R7, #4
 	MOV   R0, #1
 	MOV   R2, #47
@@ -184,9 +206,25 @@ _win:
 	LDR   R1, =opcionIn
 	BL    scanf
 
+
+
+	@**   Solicitamos ingreso para esperar 
+	/*MOV   R7, #4
+	MOV   R0, #1
+	MOV   R2, #47
+	LDR   R1, =continuar	
+	SWI   0
+
+	LDR   R0, =fIngreso
+	LDR   R1, =opcionIn
+	BL    scanf
+*/
+
+
 	@**   Limpieza de matriz
 	BL    _clear5x5
 
+	@**   Regresamos al inicio
 	B     main     
 
 
