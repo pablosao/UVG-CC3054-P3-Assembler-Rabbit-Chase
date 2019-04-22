@@ -45,7 +45,11 @@ _confInicio:
 	LDR   R2, =move
 	LDRB  R1, [R2]
 	STRB  R1, [R2]
-
+	
+	LDR   R4, =colUsr
+	LDR   R9, =filaUsr
+	LDR   R8, =displayUsr
+	
 	PUSH  {R1}
 
 	@**     Identificando movimiento
@@ -90,10 +94,10 @@ MOVECONEJO:
 	LDR   R8, =displayConejo
 
 	CMP   R1, #1
-	BLEQ  _subFilaC		@ jugador a la izquierda
+	BLEQ  _subFila		@ jugador a la izquierda
 
 	CMP R1, #2
-	BLEQ  _addFilaC		@ jugador a la izquierda
+	BLEQ  _addFila		@ jugador a la izquierda
 /*
 	CMP R1, #3
 	BLEQ  _subColumna	@ jugador hacia arriba
@@ -119,6 +123,9 @@ MOVEUSR:
 	LDR   R1, =move
 	LDRB  R1, [R1]
 
+	LDR   R4, =colUsr
+	LDR   R9, =filaUsr
+	LDR   R8, =displayUsr
 
 	@**     Identificando movimiento
 	@**     se le agrega NE a CMP para no permitir
@@ -142,7 +149,7 @@ MOVEUSR:
 
 
 @****   Movimiento a la izquierda
-_subFilaC:
+_subFila:
 	PUSH  {LR}
 
 	LDR   R2, [R4]		@ posición actual de la columna
@@ -187,7 +194,7 @@ _subFilaC:
 
 
 @****  Movimiento a la derecha
-_addFilaC:
+_addFila:
 	PUSH  {LR}
 
 	LDR   R2, [R4]		@ posición actual de la columna
@@ -228,101 +235,6 @@ _addFilaC:
 
 	POP   {PC}
 
-
-
-@****   Movimiento a la izquierda
-_subFila:
-	PUSH  {LR}
-
-	LDR   R4, =colUsr	@ direccion de posicion en columna
-	LDR   R2, [R4]		@ posición actual de la columna
-
-	PUSH  {R2}		@ Backup de posición actual de columna
-
-	CMP   R2, #0		@ posición == 0
-	MOVEQ R2, #20		@    posicion es columna 5
-
-	CMP   R2, #4		@ posición >= 8
-	SUBGE R2, #4		@    Si es >= se resta 4
-
-	@**     actualizando variable de columna con nueva posición
-	STR   R2, [R4]
-
-
-	@**     Nueva posición de jugador
-	LDR   R11, =filaUsr
-	LDR   R11,[R11]
-
-	LDR   R1, =displayUsr
-	LDR   R1, [R1]
-
-	BL    IDFILA
-
-	ADD   R12, R2
-	STR   R1, [R12]
-
-	POP   {R2}
-
-	@**     liberando posición anterior de jugador
-	LDR   R11, =filaUsr
-	LDR   R11,[R11]
-
-	LDR   R1, =clsDisplay
-	LDR   R1, [R1]
-
-	BL    IDFILA
-
-	ADD   R12, R2
-	STR   R1, [R12]
-
-	POP   {PC}
-
-
-@****  Movimiento a la izquierda
-_addFila:
-	PUSH  {LR}
-
-	LDR   R4, =colUsr	@ direccion de posicion en columna
-	LDR   R2, [R4]		@ posición actual de la columna
-
-	PUSH  {R2}		@ Backup de posición actual de columna
-
-	ADD R2, #4
-
-	CMP   R2, #16		@ posición == 0
-	MOVGT R2, #0		@    posicion es columna 0
-
-	@**     actualizando variable de columna con nueva posición
-	STR   R2, [R4]
-
-
-	@**     Nueva posición de jugador
-	LDR   R11, =filaUsr
-	LDR   R11,[R11]
-
-	LDR   R1, =displayUsr
-	LDR   R1, [R1]
-
-	BL    IDFILA
-
-	ADD   R12, R2
-	STR   R1, [R12]
-
-	POP   {R2}
-
-	@**     liberando posición anterior de jugador
-	LDR   R11, =filaUsr
-	LDR   R11,[R11]
-
-	LDR   R1, =clsDisplay
-	LDR   R1, [R1]
-
-	BL    IDFILA
-
-	ADD   R12, R2
-	STR   R1, [R12]
-
-	POP   {PC}
 
 
 @****   Movimiento hacia arriba de jugador
