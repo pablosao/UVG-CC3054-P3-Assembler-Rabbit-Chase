@@ -11,7 +11,7 @@ El objetivo del juego es atrapar un “conejo” antes que escape del tablero de
 Para ejecutar el juego debemos colocar los archivos de assembler (.s) en un mismo directorio, y posicionarnos desde la terminal en dicha locación y poder compilar el código con el siguiente comando:
 
 ```bash
-$ gcc -o RabbitChase var.s rutinas.s RabbitChase.s  
+$ gcc -o RabbitChase var.s random.s rutinas.s RabbitChase.s  
 ```
 
 Para iniciar el juego, ejecutamos en la terminal el siguiente comando:
