@@ -6,26 +6,109 @@
 /*				  tablero.                                          */
 /************************************************************************************/
 
-/* configuramos inicio de jugador */
+@****   configuramos inicio de jugador
 .text
 .align 2
 .global SETUSR
 SETUSR:
 	PUSH  {LR}
-
-	BL    CLEAR 		@ Limpiamos Pantalla
-	BL    BANNER 		@ Mostramos Banner
-	BL    PRINT5X5		@ Mostramos matriz de inicio
-
+	BL    TABLERO5X5
 	BL     _confInicio
 
-
-/*   configura posición inicial de jugador   */
-_confInicio:
-	
+.text
+.align 2
+.global TABLERO5X5
+TABLERO5X5:
+	PUSH  {LR}
 	BL    CLEAR 		@ Limpiamos Pantalla
 	BL    BANNER 		@ Mostramos Banner
 	BL    PRINT5X5		@ Mostramos matriz de inicio
+	POP   {PC}
+
+@****   configura posición inicial de jugador
+_confInicio:
+
+	BL    CLEAR 		@ Limpiamos Pantalla
+	BL    BANNER 		@ Mostramos Banner
+
+	LDR   R0, =msjconf
+	BL    puts
+
+	BL    PRINT5X5		@ Mostramos matriz de inicio
+
+	MOV   R7, #3
+	MOV   R0, #0
+	MOV   R2, #1
+	LDR   R1, =move
+	SWI   0
+
+	LDR   R2, =move
+	LDRB  R1, [R2]
+	STRB  R1, [R2]
+
+	PUSH  {R1}
+
+	@**     Identificando movimiento
+	@**     se le agrega NE a CMP para no permitir
+	@**     movimientos en diagonal
+
+	CMP   R1, #'a'
+	BLEQ  _subFila		@ jugador a la izquierda
+
+	CMP R1, #'d'
+	BLEQ  _addFila		@ jugador a la izquierda
+
+/*	CMP R1, #'w'
+	BLEQ  _subColumna	@ jugador hacia arriba
+
+	CMP R1, #'s'
+	BLEQ  _addColumna
+*/
+	POP   {R1}
+
+	CMP   R1, #'c'
+	BNE   _confInicio
+
+	MOV   R1, #''
+	LDR   R2, =move
+	STRB  R1, [R2]
+
+	POP   {PC}
+
+.text
+.align 2
+.global MOVECONEJO
+MOVECONEJO:
+	PUSH  {LR}
+
+	MOV   R12, #4
+	BL    RANDOM
+	MOV   R1,R12
+
+	LDR   R4, =colConejo
+	LDR   R9, =filaConejo
+	LDR   R8, =displayConejo
+
+	CMP   R1, #1
+	BLEQ  _subFilaC		@ jugador a la izquierda
+
+	CMP R1, #2
+	BLEQ  _addFilaC		@ jugador a la izquierda
+/*
+	CMP R1, #3
+	BLEQ  _subColumna	@ jugador hacia arriba
+
+	CMP R1, #4
+	BLEQ  _addColumna
+*/
+	POP   {PC}
+
+.text
+.align 2
+.global MOVEUSR
+@****   movimiento de usuario
+MOVEUSR:
+	PUSH  {LR}
 
 	MOV   R7, #3
 	MOV   R0, #0
@@ -36,8 +119,7 @@ _confInicio:
 	LDR   R1, =move
 	LDRB  R1, [R1]
 
-	PUSH  {R1}
-	
+
 	@**     Identificando movimiento
 	@**     se le agrega NE a CMP para no permitir
 	@**     movimientos en diagonal
@@ -50,19 +132,105 @@ _confInicio:
 
 	CMP R1, #'w'
 	BLEQ  _subColumna	@ jugador hacia arriba
-	
+
 	CMP R1, #'s'
 	BLEQ  _addColumna
 
-	POP   {R1}
 
-	CMP   R1, #'c'
-	BNE   _confInicio
 
 	POP   {PC}
 
 
-/*  Movimiento a la izquierda   */
+@****   Movimiento a la izquierda
+_subFilaC:
+	PUSH  {LR}
+
+	LDR   R2, [R4]		@ posición actual de la columna
+
+	PUSH  {R2}		@ Backup de posición actual de columna
+
+	CMP   R2, #0		@ posición == 0
+	MOVEQ R2, #20		@    posicion es columna 5
+
+	CMP   R2, #4		@ posición >= 8
+	SUBGE R2, #4		@    Si es >= se resta 4
+
+	@**     actualizando variable de columna con nueva posición
+	STR   R2, [R4]
+
+
+	@**     Nueva posición de jugador
+	LDR   R11,[R9]
+
+	LDR   R1, [R8]
+
+	BL    IDFILA
+
+	ADD   R12, R2
+	STR   R1, [R12]
+
+	POP   {R2}
+
+	@**     liberando posición anterior de jugador
+	LDR   R11,[R9]
+
+	LDR   R1, =clsDisplay
+	LDR   R1, [R1]
+
+	BL    IDFILA
+
+	ADD   R12, R2
+	STR   R1, [R12]
+
+	POP   {PC}
+
+
+
+@****  Movimiento a la derecha
+_addFilaC:
+	PUSH  {LR}
+
+	LDR   R2, [R4]		@ posición actual de la columna
+
+	PUSH  {R2}		@ Backup de posición actual de columna
+
+	ADD R2, #4
+
+	CMP   R2, #16		@ posición == 0
+	MOVGT R2, #0		@    posicion es columna 0
+
+	@**     actualizando variable de columna con nueva posición
+	STR   R2, [R4]
+
+
+	@**     Nueva posición de jugador
+	LDR   R11,[R9]
+
+	LDR   R1, [R8]
+
+	BL    IDFILA
+
+	ADD   R12, R2
+	STR   R1, [R12]
+
+	POP   {R2}
+
+	@**     liberando posición anterior de jugador
+	LDR   R11,[R9]
+
+	LDR   R1, =clsDisplay
+	LDR   R1, [R1]
+
+	BL    IDFILA
+
+	ADD   R12, R2
+	STR   R1, [R12]
+
+	POP   {PC}
+
+
+
+@****   Movimiento a la izquierda
 _subFila:
 	PUSH  {LR}
 
@@ -81,7 +249,7 @@ _subFila:
 	STR   R2, [R4]
 
 
-	@**     Nueva posición de jugador	
+	@**     Nueva posición de jugador
 	LDR   R11, =filaUsr
 	LDR   R11,[R11]
 
@@ -95,7 +263,7 @@ _subFila:
 
 	POP   {R2}
 
-	@**     liberando posición anterior de jugador	
+	@**     liberando posición anterior de jugador
 	LDR   R11, =filaUsr
 	LDR   R11,[R11]
 
@@ -110,7 +278,7 @@ _subFila:
 	POP   {PC}
 
 
-/*  Movimiento a la izquierda   */
+@****  Movimiento a la izquierda
 _addFila:
 	PUSH  {LR}
 
@@ -128,7 +296,7 @@ _addFila:
 	STR   R2, [R4]
 
 
-	@**     Nueva posición de jugador	
+	@**     Nueva posición de jugador
 	LDR   R11, =filaUsr
 	LDR   R11,[R11]
 
@@ -142,7 +310,7 @@ _addFila:
 
 	POP   {R2}
 
-	@**     liberando posición anterior de jugador	
+	@**     liberando posición anterior de jugador
 	LDR   R11, =filaUsr
 	LDR   R11,[R11]
 
@@ -157,7 +325,7 @@ _addFila:
 	POP   {PC}
 
 
-/*  Movimiento hacia arriba de jugador   */
+@****   Movimiento hacia arriba de jugador
 _subColumna:
 	PUSH  {LR}
 
@@ -189,10 +357,9 @@ _subColumna:
 	ADD   R12, R1
 	STR   R2, [R12]
 
-	
 	POP   {PC}
 
-/*  Movimiento hacia abajo de jugador  */
+@****   Movimiento hacia abajo de jugador
 _addColumna:
 	PUSH  {LR}
 
@@ -224,7 +391,6 @@ _addColumna:
 	ADD   R12, R1
 	STR   R2, [R12]
 
-	
 	POP   {PC}
 
 
@@ -233,9 +399,9 @@ _addColumna:
 .align 2
 .global IDFILA
 
-/* Carga en R12 la fila correspondiente */
-@**     R11 -> Numero de fila a cargar, esta esta en variable
-@**     R12 -> Retorna dirección de la fila en variable
+@****   Carga en R12 la fila correspondiente
+@**   R11 -> Numero de fila a cargar, esta esta en variable
+@**   R12 -> Retorna dirección de la fila en variable
 IDFILA:
 	PUSH  {LR}
 
@@ -261,7 +427,7 @@ IDFILA:
 .align 2
 .global CLEAR
 
-/* limpieza de datos */
+@****   limpieza de datos
 CLEAR:
 	PUSH  {LR}
 
@@ -274,7 +440,7 @@ CLEAR:
 .align 2
 .global BANNER
 
-/* Banner de ingreso  */
+@**** Banner de ingreso
 BANNER:
 
 	PUSH  {LR}
@@ -298,7 +464,7 @@ BANNER:
 .align 2
 .global MENU
 
-/*  Despliegue del menu  */
+@****  Despliegue del menu
 MENU:
 	PUSH   {LR}
 
@@ -312,7 +478,7 @@ MENU:
 .align 2
 .global PRINT5X5
 
-/*  Despliegue del menu  */
+@****   Despliegue del menu
 PRINT5X5:
 	PUSH  {LR}		@ Se guarda dirección de llamado
 
@@ -409,9 +575,6 @@ menu:
 new_line:
 	.ascii "\n"
 
-.align 2
-move:
-	.byte ''
 
 .align 2
 Entro:
@@ -420,3 +583,7 @@ Entro:
 .align 2
 tmpDisplay:
 	.asciz "Valor %d\n"
+
+.align 2
+msjconf:
+	.ascii "Seleccione posición\n"

@@ -8,14 +8,25 @@
  * Descripción: Generador de números aleatorios  *
  *************************************************/
 
-int main(){
+int RANDOM();
 
-	int num = 3;
+int main(){
+	int res;
+	res = RANDOM();
+	
+	printf("Valor: %d\n",res);
+	
+	return 0;
+}
+
+int RANDOM(){
+	int max = 4;
+	int num;
 	
 	/* Inicializando numero random*/
 	srand(time(0));
 
-	num = rand() % num + 1;
-
-	return 0;
+	num = rand() % max + 1;
+	
+	return num;
 }

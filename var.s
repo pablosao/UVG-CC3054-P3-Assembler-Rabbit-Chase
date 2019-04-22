@@ -2,8 +2,7 @@
 /************************************************************************************/ 
 /*         Autor: Pablo Sao                                                         */ 
 /*         Fecha: 19 de abril de 2019                                               */ 
-/*   Descripcion: variables de acceso global                                        */ 
-/*				                                                    */ 
+/*   Descripcion: variables de acceso global                                        */
 /************************************************************************************/ 
 
 
@@ -46,6 +45,11 @@ colUsr:
 filaUsr:
 	.word 1
 
+
+.align 2
+.global move
+move:
+	.byte ''
 
 
 /*     Posición conejo    */

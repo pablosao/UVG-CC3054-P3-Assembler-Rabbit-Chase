@@ -1,47 +1,49 @@
 
-/************************************************************************************/ 
-/*         Autor: Pablo Sao & Mirka Monzon                                          */ 
-/*         Fecha: 11 de abril de 2019                                               */ 
-/*   Descripcion: Rabbit Chase, donde el objetivo es capturar el conejo en un       */ 
-/*				  tablero.                                          */ 
-/************************************************************************************/ 
+/************************************************************************************/
+/*         Autor: Pablo Sao & Mirka Monzon                                          */
+/*         Fecha: 11 de abril de 2019                                               */
+/*   Descripcion: Rabbit Chase, donde el objetivo es capturar el conejo en un       */
+/*				  tablero.                                          */
+/************************************************************************************/
 
-.text 
-.align 2 
-.global main 
-.type main, %function 
+.text
+.align 2
+.global main
+.type main, %function
 
-main: 
-	STMFD SP!, {LR} 
+main:
+	STMFD SP!, {LR}
 
 	@**    Inicializando matriz
 	BL    _initMatrix
-	
+
 	@**    Desplegando inicio
 	BL    CLEAR 		@ Limpiamos Pantalla
 	BL    BANNER 		@ Mostramos Banner
 	BL    MENU 		@ Mostramos Menú
 
-	/*   Ingreso de opción   */
+
+	@**   Ingreso de opción
 
 	LDR   R0, =msjOpcion
 	BL    puts
 
-	/*   Ingreso de teclado   */
+	@**   Ingreso de teclado
 
 	LDR   R0, =fIngreso
 	LDR   R1, =opcionIn
 	BL    scanf
 
-	/*   verificamos que se haya ingresado un número   */
+	@**   verificamos que se haya ingresado un número
 	CMP   R0, #0
 	BEQ   _error
 
-	/*   Identificación de operaciones   */
+	@**   Identificación de operaciones
 	LDR   R0, =opcionIn
 	LDR   R0, [R0]
 
 	CMP   R0, #1
+	BLEQ  SETUSR
 	BLEQ  _startPlay
 
 	CMP   R0, #2
@@ -51,11 +53,11 @@ main:
 
 _initMatrix:
 	PUSH  {LR}
-	
+
 	@**     Posición inicial de jugador
 	LDR   R0, =colUsr
 	LDR   R0, [R0]
-	
+
 	LDR   R11, =filaUsr
 	LDR   R11,[R11]
 
@@ -71,7 +73,7 @@ _initMatrix:
 	@**     Posición inicial de conejo
 	LDR   R0, =colConejo
 	LDR   R0, [R0]
-	
+
 	LDR   R11, =filaConejo
 	LDR   R11,[R11]
 
@@ -83,7 +85,7 @@ _initMatrix:
 	ADD   R12, R0
 	STR   R1, [R12]
 
-	POP   {PC}	
+	POP   {PC}
 
 _error:
 	LDR   R0, =opcionIn
@@ -95,13 +97,32 @@ _error:
 
 _startPlay:
 
-	BL    SETUSR
-	
-	B     _exit
+	MOV   R10, #0
+	BL    TABLERO5X5
+
+	PUSH  {R10}
+
+	LDR   R0, =msjturnoUsr
+	BL    puts
+
+	BL    MOVEUSR
+
+	@**   Movimiento conejo
+
+	LDR   R0, =msjturnoC
+	BL    puts
+
+	BL    MOVECONEJO
+
+	POP   {R10}
+
+	CMP   R10, #0
+	BEQ   _startPlay
+	BNE   _exit
 
 
-_exit: 
-	LDMFD SP!,{LR} 
+_exit:
+	LDMFD SP!,{LR}
 	BX    LR
 
 .data
@@ -116,3 +137,10 @@ opcionIn:
 msjOpcion:
 	.asciz "Ingrese Opción: "
 
+.align 2
+msjturnoUsr:
+	.ascii "Turno Usuario: "
+
+.align 2
+msjturnoC:
+	.ascii "Turno Conejo..."
