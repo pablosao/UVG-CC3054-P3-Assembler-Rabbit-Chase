@@ -32,38 +32,39 @@ displayCapConejo:		@ Captura de Conejo
 	.ascii "(x) "
 
 
-/*     Posición jugador    */
+@****   Posición que tendra el jugador
 .align 2
 .global colUsr
 .data
 colUsr:
-	.word 8
+	.word 0
 
 .align 2
 .global filaUsr
 .data
 filaUsr:
-	.word 1
+	.word 0
 
 
-.align 2
-.global move
-move:
-	.byte ''
-
-
-/*     Posición conejo    */
+@****   Posición que tendra el conejo
 .align 2
 .global colConejo
 .data
 colConejo:
-	.word 8
+	.word 0
 
 .align 2
 .global filaConejo
 .data
 filaConejo:
-	.word 3
+	.word 0
+
+
+@****   Variable para movimiento
+.align 2
+.global move
+move:
+	.byte ''
 
 
 /*   Tablero de 5x5     */

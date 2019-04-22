@@ -14,6 +14,30 @@
 main:
 	STMFD SP!, {LR}
 
+	@**   Inicializando valor de columna de usuario
+	LDR   R1, =colUsr5x5
+	LDR   R1, [R1]
+	LDR   R2,=colUsr
+	STR   R1, [R2]
+
+	@**   Inicializando valor de columna de usuario
+	LDR   R1, =filaUsr5x5
+	LDR   R1, [R1]
+	LDR   R2,=filaUsr
+	STR   R1, [R2]
+
+	@**   Inicializando valor de columna de conejo
+	LDR   R1, =colConejo5x5
+	LDR   R1, [R1]
+	LDR   R2,=colConejo
+	STR   R1, [R2]
+
+	@**   Inicializando valor de columna de conejo
+	LDR   R1, =filaConejo5x5
+	LDR   R1, [R1]
+	LDR   R2,=filaConejo
+	STR   R1, [R2]
+
 	@**    Inicializando matriz
 	BL    _initMatrix
 
@@ -143,6 +167,9 @@ _win:
 	
 	BL    CLEAR 		@ Limpiamos Pantalla
 	BL    BANNER 		@ Mostramos Banner
+
+	LDR   R0, =win1
+	BL    puts
 	
 	LDR   R0, =continuar
 	BL    puts
@@ -185,6 +212,32 @@ msjturnoUsr:
 .align 2
 msjturnoC:
 	.ascii "Turno Conejo..."
+
+
+@****   Posición inicial del jugador
+.align 2
+.data
+colUsr5x5:
+	.word 8
+
+.align 2
+.data
+filaUsr5x5:
+	.word 1
+
+
+@****   Posición inicial del conejo
+.align 2
+.data
+colConejo5x5:
+	.word 8
+
+.align 2
+.data
+filaConejo5x5:
+	.word 3
+
+
 
 .align 2
 continuar:
