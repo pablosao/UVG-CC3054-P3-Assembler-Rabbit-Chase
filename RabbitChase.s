@@ -98,6 +98,24 @@ _error:
 _startPlay:
 
 	MOV   R10, #0
+	@**   Cargamos columnas y filas para comprobar posición
+	
+	LDR   R2, =colUsr
+	LDR   R2, [R2]
+
+	LDR   R3, =colConejo
+	LDR   R3, [R3]
+
+	LDR   R4, =filaUsr
+	LDR   R4, [R4]
+
+	LDR   R5, =filaConejo
+	LDR   R5, [R5]
+
+	@CMP   R2, R3
+	@CMPEQ R4, R5
+	@BLEQ  _win
+	
 	BL    TABLERO5X5
 
 	PUSH  {R10}
@@ -121,6 +139,27 @@ _startPlay:
 	BNE   _exit
 
 
+_win:
+	
+	BL    CLEAR 		@ Limpiamos Pantalla
+	BL    BANNER 		@ Mostramos Banner
+	
+	LDR   R0, =continuar
+	BL    puts
+	
+	MOV   R7, #3
+	MOV   R0, #0
+	MOV   R2, #1
+	LDR   R1, =move
+	SWI   0
+	
+	MOV   R1, #''
+	LDR   R2, =move
+	STRB  R1, [R2]
+	
+	B     main
+	
+
 _exit:
 	LDMFD SP!,{LR}
 	BX    LR
@@ -128,12 +167,14 @@ _exit:
 .data
 .align 2
 
+.align 2
 fIngreso:
 	.asciz "%d"
 
 opcionIn:
 	.word 0
 
+.align 2
 msjOpcion:
 	.asciz "Ingrese Opción: "
 
@@ -144,3 +185,26 @@ msjturnoUsr:
 .align 2
 msjturnoC:
 	.ascii "Turno Conejo..."
+
+.align 2
+continuar:
+	.ascii "\t<Presione \033[31;42mc\033[0m para continuar>"
+
+.align 2
+win1:
+	.asciz "                                                 ,--. 
+           .---.           ,---,               ,--.'| 
+          /. ./|        ,`--.' |           ,--,:  : | 
+      .--'.  ' ;        |   :  :        ,`--.'`|  ' : 
+     /__./ \ : |        :   |  '        |   :  :  | | 
+ .--'.  '   \' .        |   :  |        :   |   \ | : 
+/___/ \ |    ' '        '   '  ;        |   : '  '; | 
+;   \  \;      :        |   |  |        '   ' ;.    ; 
+ \   ;  `      |        '   :  ;        |   | | \   | 
+  .   \    .\  ;        |   |  '        '   : |  ; .' 
+   \   \   ' \ |        '   :  |        |   | '`--'   
+    :   '  |--'         ;   |.'         '   : |       
+     \   \ ;            '---'           ;   |.'       
+      '---'                             '---''  " 
+	  
+

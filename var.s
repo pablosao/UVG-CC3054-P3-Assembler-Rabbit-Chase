@@ -17,7 +17,7 @@ displayUsr:
 .align 2
 .global displayConejo
 displayConejo:
-	.asciz "(B) "
+	.ascii "(B) "
 
 .text
 .align 2
@@ -29,7 +29,7 @@ clsDisplay:
 .align 2
 .global displayConejo
 displayCapConejo:		@ Captura de Conejo
-	.asciz "(x) "
+	.ascii "(x) "
 
 
 /*     Posición jugador    */
