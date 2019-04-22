@@ -62,12 +62,12 @@ _confInicio:
 	CMP R1, #'d'
 	BLEQ  _addFila		@ jugador a la izquierda
 
-/*	CMP R1, #'w'
+	CMP R1, #'w'
 	BLEQ  _subColumna	@ jugador hacia arriba
 
 	CMP R1, #'s'
 	BLEQ  _addColumna
-*/
+
 	POP   {R1}
 
 	CMP   R1, #'c'
@@ -104,6 +104,11 @@ MOVECONEJO:
 
 	CMP R1, #4
 	BLEQ  _addColumna
+
+	MOV   R1, #0		@ limpiando variable
+	MOV   R4, #0
+	MOV   R8, #0
+	MOV   R9, #0
 
 	POP   {PC}
 
@@ -143,7 +148,14 @@ MOVEUSR:
 	CMP R1, #'s'
 	BLEQ  _addColumna
 
+	MOV   R1, #''
+	LDR   R2, =move
+	STRB  R1, [R2]
 
+	MOV   R1, #0		@ limpiando variable
+	MOV   R4, #0
+	MOV   R8, #0
+	MOV   R9, #0
 
 	POP   {PC}
 
@@ -268,7 +280,6 @@ _subColumna:
 	POP   {PC}
 
 
-
 @****   Movimiento hacia abajo de jugador
 _addColumna:
 	PUSH  {LR}
@@ -289,14 +300,14 @@ _addColumna:
 	MOVEQ R11, #1
 	ADDNE R11, #1
 
-	STR   R11, [R10]
+	STR   R11, [R9]
 
 	BL    IDFILA
 
 	LDR   R2, [R8]		@ valor para liberar posición
 
 	ADD   R12, R1
-	STR   R2, [R12]
+	STR R2, [R12]
 
 	POP   {PC}
 
