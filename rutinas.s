@@ -98,13 +98,13 @@ MOVECONEJO:
 
 	CMP R1, #2
 	BLEQ  _addFila		@ jugador a la izquierda
-/*
+
 	CMP R1, #3
 	BLEQ  _subColumna	@ jugador hacia arriba
 
 	CMP R1, #4
 	BLEQ  _addColumna
-*/
+
 	POP   {PC}
 
 .text
@@ -236,16 +236,13 @@ _addFila:
 	POP   {PC}
 
 
-
 @****   Movimiento hacia arriba de jugador
 _subColumna:
 	PUSH  {LR}
 
-	LDR   R3, =colUsr	@ dirección de columna
-	LDR   R1, [R3]		@ posición de columna
+	LDR   R1, [R4]		@ posición de columna
 
-	LDR   R10, =filaUsr	@ Dirección de fila actual
-	LDR   R11, [R10]	@ posición de fila
+	LDR   R11, [R9]	@ posición de fila
 
 	BL    IDFILA
 
@@ -259,27 +256,26 @@ _subColumna:
 	MOVEQ R11, #5
 	SUBNE R11, #1
 
-	STR   R11, [R10]
+	STR   R11, [R9]
 
 	BL    IDFILA
 
-	LDR   R2, =displayUsr	@ Dirección de liberación de posición
-	LDR   R2, [R2]		@ valor para liberar posición
+	LDR   R2, [R8]		@ valor para liberar posición
 
 	ADD   R12, R1
 	STR   R2, [R12]
 
 	POP   {PC}
 
+
+
 @****   Movimiento hacia abajo de jugador
 _addColumna:
 	PUSH  {LR}
 
-	LDR   R3, =colUsr	@ dirección de columna
-	LDR   R1, [R3]		@ posición de columna
+	LDR   R1, [R4]		@ posición de columna
 
-	LDR   R10, =filaUsr	@ Dirección de fila actual
-	LDR   R11, [R10]	@ posición de fila
+	LDR   R11, [R9]	@ posición de fila
 
 	BL    IDFILA
 
@@ -297,8 +293,7 @@ _addColumna:
 
 	BL    IDFILA
 
-	LDR   R2, =displayUsr	@ Dirección de liberación de posición
-	LDR   R2, [R2]		@ valor para liberar posición
+	LDR   R2, [R8]		@ valor para liberar posición
 
 	ADD   R12, R1
 	STR   R2, [R12]
