@@ -120,8 +120,32 @@ _error:
 
 
 _startPlay:
+	
+	BL    TABLERO5X5
 
-	MOV   R10, #0
+	@**   Movimiento de jugador
+	LDR   R0, =msjturnoUsr
+	BL    puts
+
+	BL    MOVEUSR
+
+	@**   Validamos ganador
+	BL    _validaXY
+
+	@**   Movimiento conejo
+	LDR   R0, =msjturnoC
+	BL    puts
+
+	BL    MOVECONEJO
+
+	@**   Validamos ganador
+	BL    _validaXY
+
+	B     _startPlay
+
+_validaXY:
+	PUSH  {LR}
+
 	@**   Cargamos columnas y filas para comprobar posición
 	
 	LDR   R2, =colUsr
@@ -136,32 +160,11 @@ _startPlay:
 	LDR   R5, =filaConejo
 	LDR   R5, [R5]
 
-	@CMP   R2, R3
-	@CMPEQ R4, R5
-	@BLEQ  _win
-	
-	BL    TABLERO5X5
+	CMP   R2, R3
+	CMPEQ R4, R5
+	BLEQ  _win
 
-	PUSH  {R10}
-
-	LDR   R0, =msjturnoUsr
-	BL    puts
-
-	BL    MOVEUSR
-
-	@**   Movimiento conejo
-
-	LDR   R0, =msjturnoC
-	BL    puts
-
-	BL    MOVECONEJO
-
-	POP   {R10}
-
-	CMP   R10, #0
-	BEQ   _startPlay
-	BNE   _exit
-
+	POP   {PC}
 
 _win:
 	
@@ -184,7 +187,7 @@ _win:
 	LDR   R2, =move
 	STRB  R1, [R2]
 	
-	B     main
+	B     _exit
 	
 
 _exit:
