@@ -178,7 +178,7 @@ _subFila:
 	PUSH  {R2}		@ Backup de posición actual de columna
 
 	CMP   R2, #0		@ posición == 0
-	MOVEQ R2, #20		@    posicion es columna 5
+	MOVEQ R2, #32		@    posicion es columna 5
 
 	CMP   R2, #4		@ posición >= 8
 	SUBGE R2, #4		@    Si es >= se resta 4
@@ -225,7 +225,7 @@ _addFila:
 
 	ADD R2, #4
 
-	CMP   R2, #16		@ posición == 0
+	CMP   R2, #28		@ posición == 0
 	MOVGT R2, #0		@    posicion es columna 0
 
 	@**     actualizando variable de columna con nueva posición
@@ -276,7 +276,7 @@ _subColumna:
 	STR   R2, [R12]		@ liberamos espacio
 
 	CMP   R11, #1
-	MOVEQ R11, #5
+	MOVEQ R11, #7
 	SUBNE R11, #1
 
 	STR   R11, [R9]
@@ -308,7 +308,7 @@ _addColumna:
 	ADD   R12, R1		@ Obtenemos posición en vector
 	STR   R2, [R12]		@ liberamos espacio
 
-	CMP   R11, #5
+	CMP   R11, #7
 	MOVEQ R11, #1
 	ADDNE R11, #1
 
@@ -349,6 +349,12 @@ IDFILA:
 
 	CMP   R11, #5
 	LDREQ R12, =fila5
+	
+	CMP   R11, #6
+	LDREQ R12, =fila6
+
+	CMP   R11, #7
+	LDREQ R12, =fila7
 
 
 	POP   {PC}
@@ -412,41 +418,56 @@ MENU:
 PRINT5X5:
 	PUSH  {LR}		@ Se guarda dirección de llamado
 
-	MOV   R5, #5		@ Control de loop
+	MOV   R5, #8		@ Control de loop
 	LDR   R1, =fila1	@ Se carga dirección de vector 1
 	BL    _printM		@ Se llama al método de impresión
 
 	LDR   R0,=new_line	@ Carga dirección de salto de linea
 	BL    puts		@ Se imprime en pantalla
 
-	MOV   R5, #5		@ Control de loop
+	MOV   R5, #8		@ Control de loop
 	LDR   R1, =fila2	@ Se carga dirección de vector 1
 	BL    _printM		@ Se llama al método de impresión
 
 	LDR   R0,=new_line	@ Carga dirección de salto de linea
 	BL    puts		@ Se imprime en pantalla
 
-	MOV   R5, #5		@ Control de loop
+	MOV   R5, #8		@ Control de loop
 	LDR   R1, =fila3	@ Se carga dirección de vector 1
 	BL    _printM		@ Se llama al método de impresión
 
 	LDR   R0,=new_line	@ Carga dirección de salto de linea
 	BL    puts		@ Se imprime en pantalla
 
-	MOV   R5, #5		@ Control de loop
+	MOV   R5, #8		@ Control de loop
 	LDR   R1, =fila4	@ Se carga dirección de vector 1
 	BL    _printM		@ Se llama al método de impresión
 
 	LDR   R0,=new_line	@ Carga dirección de salto de linea
 	BL    puts		@ Se imprime en pantalla
 
-	MOV   R5, #5		@ Control de loop
+	MOV   R5, #8		@ Control de loop
 	LDR   R1, =fila5	@ Se carga dirección de vector 1
 	BL    _printM		@ Se llama al método de impresión
 
 	LDR   R0,=new_line	@ Carga dirección de salto de linea
 	BL    puts		@ Se imprime en pantalla
+	
+	MOV   R5, #8		@ Control de loop
+	LDR   R1, =fila6	@ Se carga dirección de vector 1
+	BL    _printM		@ Se llama al método de impresión
 
+	LDR   R0,=new_line	@ Carga dirección de salto de linea
+	BL    puts		@ Se imprime en pantalla
+
+	MOV   R5, #8		@ Control de loop
+	LDR   R1, =fila7	@ Se carga dirección de vector 1
+	BL    _printM		@ Se llama al método de impresión
+
+	LDR   R0,=new_line	@ Carga dirección de salto de linea
+	BL    puts		@ Se imprime en pantalla
+	
+	
 	POP   {PC}		@ Se retorna a la rutina de procedencia
 
 _printM:

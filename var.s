@@ -72,28 +72,42 @@ move:
 .global fila1
 .data
 fila1:
-	.ascii "( ) ","( ) ","( ) ","( ) ","( ) "
+	.ascii "( ) ","( ) ","( ) ","( ) ","( ) ","( ) ","( ) ","( ) "
 
 .align 2
 .global fila2
 .data
 fila2:
-	.ascii "( ) ","( ) ","( ) ","( ) ","( ) "
+	.ascii "( ) ","( ) ","( ) ","( ) ","( ) ","( ) ","( ) ","( ) "
 
 .align 2
 .global fila3
 .data
 fila3:
-	.ascii "( ) ","( ) ","( ) ","( ) ","( ) "
+	.ascii "( ) ","( ) ","( ) ","( ) ","( ) ","( ) ","( ) ","( ) "
 
 .align 2
 .global fila4
 .data
 fila4:
-	.ascii "( ) ","( ) ","( ) ","( ) ","( ) "
+	.ascii "( ) ","( ) ","( ) ","( ) ","( ) ","( ) ","( ) ","( ) "
 
 .align 2
 .global fila5
 .data
 fila5:
-	.ascii "( ) ","( ) ","( ) ","( ) ","( ) "
+	.ascii "( ) ","( ) ","( ) ","( ) ","( ) ","( ) ","( ) ","( ) "
+
+.align 2
+.global fila6
+.data
+fila6:
+	.ascii "( ) ","( ) ","( ) ","( ) ","( ) ","( ) ","( ) ","( ) "
+
+.align 2
+.global fila7
+.data
+fila7:
+	.ascii "( ) ","( ) ","( ) ","( ) ","( ) ","( ) ","( ) ","( ) "
+	
+

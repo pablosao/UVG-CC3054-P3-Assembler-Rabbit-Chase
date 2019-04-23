@@ -313,7 +313,7 @@ msjturnoC:
 .align 2
 .data
 colUsr5x5:
-	.word 8
+	.word 12
 
 .align 2
 .data
@@ -325,12 +325,12 @@ filaUsr5x5:
 .align 2
 .data
 colConejo5x5:
-	.word 8
+	.word 12
 
 .align 2
 .data
 filaConejo5x5:
-	.word 3
+	.word 4
 
 
 
