@@ -14,6 +14,9 @@
 main:
 	STMFD SP!, {LR}
 
+	@**   Limpieza de matriz
+	BL    _clear5x5
+
 	@**   Inicializando valor de columna de usuario
 	LDR   R1, =colUsr5x5
 	LDR   R1, [R1]
@@ -71,9 +74,33 @@ main:
 	BLEQ  _startPlay
 
 	CMP   R0, #2
+	BLEQ  _printInstrucciones
+
+	CMP   R0, #3
 	BLEQ   _exit
 	BLGT  _error
 
+
+_printInstrucciones:
+	@**   Limpiamos y mostramos banner
+	BL    CLEAR 		@ Limpiamos Pantalla
+	BL    BANNER 		@ Mostramos Banner
+	
+	LDR   R0, =instrucciones
+	BL    puts
+	
+	@**   Mostramos ingreso para esperar
+	MOV   R7, #4
+	MOV   R0, #1
+	MOV   R2, #47
+	LDR   R1, =continuar	
+	SWI   0
+
+	LDR   R0, =fIngreso
+	LDR   R1, =opcionIn
+	BL    scanf
+	
+	B     main
 
 _initMatrix:
 	PUSH  {LR}
@@ -206,24 +233,6 @@ _win:
 	LDR   R1, =opcionIn
 	BL    scanf
 
-
-
-	@**   Solicitamos ingreso para esperar 
-	/*MOV   R7, #4
-	MOV   R0, #1
-	MOV   R2, #47
-	LDR   R1, =continuar	
-	SWI   0
-
-	LDR   R0, =fIngreso
-	LDR   R1, =opcionIn
-	BL    scanf
-*/
-
-
-	@**   Limpieza de matriz
-	BL    _clear5x5
-
 	@**   Regresamos al inicio
 	B     main     
 
@@ -346,3 +355,22 @@ win1:
      \\   \\ ;            '---'           ;   |.'       
       '---'                             '---'\033[0m\n" 
 	  
+
+.align 2
+instrucciones:
+	.asciz "Movimiento en tablero: \nPara movilizarse hacia arriba se selecciona la tecla \033[31mw\033[0m,
+hacia abajo la tecla \033[31ms\033[0m. Hacia la izquierda mediante la tecla \033[31m a\033[0m, 
+y hacia la derecha utilizando la tecla \033[31md\033[0m. Cada tecla debe de ir acompañada de la 
+tecla \033[31menter\033[0m, para desplazarse.
+
+\t\033[33m   w       
+\ta  s  d \033[0m
+
+Jugando:
+Antes de iniciar a jugar debemos seleccionar la posición en la primera fila del 
+tablero para iniciar. Ya teniendo seleccionada la casilla deseada, seleccionamos 
+la letra c.
+
+Luego el juego iniciara y podemos desplazarnos por el tablero. Si deseamos salir 
+de la partida, debemos ingresar la tecla \033[31mv\033[0m, seguida de la tecla 
+\033[31menter\033[0m.\n"

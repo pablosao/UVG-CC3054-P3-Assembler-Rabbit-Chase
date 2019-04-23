@@ -153,6 +153,9 @@ MOVEUSR:
 	CMP R1, #'s'
 	BLEQ  _addColumna
 
+	CMP R1, #'v'
+	BLEQ  main
+
 	MOV   R1, #''
 	LDR   R2, =move
 	STRB  R1, [R2]
@@ -496,7 +499,7 @@ instrucciones:
 
 .align 2
 menu:
-	.ascii "\t\t\tMenú \n\t1). Iniciar Partida. \n\t2). Salir.\n"
+	.ascii "\t\t\tMenú \n\t1). Iniciar Partida. \n\t2). Instrucciones.\n\t3). Salir.\n"
 
 .align 2
 new_line:
